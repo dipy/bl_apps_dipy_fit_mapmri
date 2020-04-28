@@ -9,15 +9,20 @@ set -x
 cmd=`jq -r .command config.json`
 case "$cmd" in
 
-    dipy_fit_dti)
+    dipy_fit_mapmri)
         cat > script.sh <<EOF
 #!/bin/bash
 $cmd --force \
     --out_dir $(pwd) \
     --b0_threshold $(jq -r .b0_threshold config.json) \
-    --bvecs_tol $(jq -r .bvecs_tol config.json) \
+    --laplacian $(jq -r .laplacian config.json) \
+    --positivity $(jq -r .positivity config.json) \
+    --bval_threshold $(jq -r .bval_threshold config.json) \
+    --laplacian_weighting $(jq -r .laplacian_weighting config.json) \
+    --radial_order $(jq -r .radial_order config.json) \
     --out_strat what \
-    $(jq -r .dwi config.json) $(jq -r .bvals config.json) $(jq -r .bvecs config.json) $(jq -r .mask config.json)
+    $(jq -r .dwi config.json) $(jq -r .bvals config.json) $(jq -r .bvecs config.json) $(jq -r .small_delta config.json)
+    $(jq -r .big_delta config.json)
 EOF
         ;;
     *)
