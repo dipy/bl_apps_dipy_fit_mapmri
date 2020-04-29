@@ -14,12 +14,12 @@ case "$cmd" in
 #!/bin/bash
 LAPLACIAN_OPT=`jq -r '.laplacian' config.json`
 POSITIVITY_OPT=`jq -r '.positivity' config.json`
-if [ "$LAPLACIAN_OPT" = true]; then
+if [ "$LAPLACIAN_OPT" = true ]; then
     LAPLACIAN_OPT="--laplacian"
 else
     LAPLACIAN_OPT=" "
 fi
-if [ "$POSITIVITY_OPT" = true]; then
+if [ "$POSITIVITY_OPT" = true ]; then
     POSITIVITY_OPT="--positivity"
 else
     POSITIVITY_OPT=" "
