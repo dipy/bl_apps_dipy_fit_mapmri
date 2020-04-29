@@ -21,8 +21,7 @@ $cmd --force \
     --laplacian_weighting $(jq -r .laplacian_weighting config.json) \
     --radial_order $(jq -r .radial_order config.json) \
     --out_strat what \
-    $(jq -r .dwi config.json) $(jq -r .bvals config.json) $(jq -r .bvecs config.json) $(jq -r .small_delta config.json)
-    $(jq -r .big_delta config.json)
+    $(jq -r .dwi config.json) $(jq -r .bvals config.json) $(jq -r .bvecs config.json) $(jq -r .small_delta config.json) $(jq -r .big_delta config.json)
 EOF
         ;;
     *)
