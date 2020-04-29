@@ -12,11 +12,22 @@ case "$cmd" in
     dipy_fit_mapmri)
         cat > script.sh <<EOF
 #!/bin/bash
+LAPLACIAN_OPT=`jq -r '.laplacian' config.json`
+POSITIVITY_OPT=`jq -r '.positivity' config.json`
+if $LAPLACIAN_OPT; then
+    LAPLACIAN_OPT="--laplacian"
+else
+    LAPLACIAN_OPT=" "
+fi
+if $POSITIVITY_OPT; then
+    POSITIVITY_OPT="--positivity"
+else
+    POSITIVITY_OPT=" "
+fi
 $cmd --force \
     --out_dir $(pwd) \
     --b0_threshold $(jq -r .b0_threshold config.json) \
-    --laplacian $(jq -r .laplacian config.json) \
-    --positivity $(jq -r .positivity config.json) \
+    $LAPLACIAN_OPT  $POSITIVITY_OPT  \
     --bval_threshold $(jq -r .bval_threshold config.json) \
     --laplacian_weighting $(jq -r .laplacian_weighting config.json) \
     --radial_order $(jq -r .radial_order config.json) \
