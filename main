@@ -14,12 +14,12 @@ case "$cmd" in
 #!/bin/bash
 LAPLACIAN_OPT=`jq -r '.laplacian' config.json`
 POSITIVITY_OPT=`jq -r '.positivity' config.json`
-if $LAPLACIAN_OPT; then
+if [ "$LAPLACIAN_OPT" = true ]; then
     LAPLACIAN_OPT="--laplacian"
 else
     LAPLACIAN_OPT=" "
 fi
-if $POSITIVITY_OPT; then
+if [ "$POSITIVITY_OPT" = true ]; then
     POSITIVITY_OPT="--positivity"
 else
     POSITIVITY_OPT=" "
@@ -27,7 +27,7 @@ fi
 $cmd --force \
     --out_dir $(pwd) \
     --b0_threshold $(jq -r .b0_threshold config.json) \
-    $LAPLACIAN_OPT  $POSITIVITY_OPT  \
+    $LAPLACIAN_OPT  $POSITIVITY_OPT   \
     --bval_threshold $(jq -r .bval_threshold config.json) \
     --laplacian_weighting $(jq -r .laplacian_weighting config.json) \
     --radial_order $(jq -r .radial_order config.json) \
