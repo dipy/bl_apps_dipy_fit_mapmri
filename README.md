@@ -3,6 +3,55 @@
 
 # Dipy Reconstruction Diffusion MRI using MAPMRI
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Fits the MAPMRI diffusion model to DWI with DIPY 1.1.1 dipy_fit_mapmri (Laplacian and/or positivity regularisation) and outputs RTOP, RTAP, RTPP, MSD, QIV, Laplacian norm and non-Gaussianity maps.**
+
+Wraps the DIPY dipy_fit_mapmri workflow (Mean Apparent Propagator MRI) on a DWI with its bvals and bvecs, inside the brainlife/dipy:1.1.1 container. Use it to compute propagator-based microstructure scalars from multi-shell DWI. At least one of laplacian or positivity must be enabled; small_delta and big_delta (diffusion timing) are passed to the workflow to build the gradient table.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/dwi` |
+| 📤 **Outputs** | `raw` |
+| 🐳 **Container** | `brainlife/dipy:1.1.1` |
+| ⚙️ **Resources** | 6 CPUs |
+| 🔗 **Run it** | [doi.org/10.25663/bl.app.67](https://doi.org/10.25663/bl.app.67) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `input` | `neuro/dwi` | yes | Path to the input volume/bvals/bvecs. |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `output` | `raw` | Output folder of dipy_fit_mapmri with the scalar maps (rtop, lapnorm, msd, qiv, rtap, rtpp, ng, parallel ng, perpendicular ng). |
+
+<details>
+<summary><b>⚙️ Parameters</b> (9)</summary>
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `command` | string | `dipy_fit_mapmri` | DIPY workflow to run; only dipy_fit_mapmri is accepted. |
+| `small_delta` | number |  | Small delta value used in generation of gradient table of provided bval and bvec. |
+| `big_delta` | number |  | Big delta value used in generation of gradient table of provided bval and bvec. |
+| `b0_threshold` | number | `50` | Threshold used to find b=0 directions (default 0.0) |
+| `bval_threshold` | number | `2000` | Sets the b-value threshold to be used in the scale factor estimation. In order for the estimated non-Gaussianity to have meaning this value should set to a lower value (b<2000 s/mm^2) such that the scale factors are estimated on signal points that reasonably represent the spins at Gaussian diffusion |
+| `laplacian_weighting` | number | `0.05` | Weighting value used in fitting the MAPMRI model in the laplacian and both model types. (default: 0.05) |
+| `radial_order` | number | `6` | Even value used to set the order of the basis (default: 6) |
+| `laplacian` | boolean | `true` | Regularize using the Laplacian of the MAP-MRI basis (default True) |
+| `positivity` | boolean | `true` | Constrain the propagator to be positive. (default True) |
+
+</details>
+
+📚 **References used by this App:**
+- Garyfallidis E. et al. Dipy, a library for the analysis of diffusion MRI data. Frontiers in Neuroinformatics 8, 8 (2014).
+- Avesani P. et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
 The App uses the Mean Apparent Propagator MRI (MAPMRI) method to do a reconstruction of the diffusion-weighted magnetic resonance imaging data.
 
 ### Authors
